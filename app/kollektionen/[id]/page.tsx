@@ -4,8 +4,10 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { constructMetadata } from '@/lib/metadata';
 import { Metadata } from 'next';
-import { Breadcrumbs } from '@/components/ui/breadcrumbs';
+import { SEOMetadata } from '@/components/seo-metadata';
+import { StickyScroll } from '@/components/ui/sticky-scroll';
 import { BlurImagePlaceholder } from '@/components/ui/blur-image';
+import { ScrollReveal, TextMask } from '@/components/ui/scroll-reveal';
 
 export function generateStaticParams() {
   return MOCK_SNEAK_PEEKS.map((peek) => ({
@@ -58,33 +60,68 @@ export default async function KollektionPage({ params }: { params: Promise<{ id:
     }
   };
 
-  return (
-    <main className="pt-[140px] pb-section-padding px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto flex-grow min-h-[70vh]">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <div className="max-w-4xl mx-auto text-center mb-16 flex flex-col items-center">
-        <Breadcrumbs items={[{ label: 'Kollektion', href: '/suche' }, { label: product.title }]} className="mb-8" />
-        <h1 className="font-display-lg text-4xl lg:text-6xl text-on-surface mb-6 font-serif">{product.title}</h1>
-        <p className="font-body-md text-text-secondary max-w-2xl mx-auto mb-8">
-          {product.subtitle}
-        </p>
-        <span className="bg-surface-variant text-text-secondary px-4 py-2 rounded-full font-label-md uppercase tracking-widest text-[10px]">
-          {product.date}
-        </span>
-      </div>
-
-      <div className="aspect-[16/9] bg-surface-variant/50 rounded-[32px] overflow-hidden flex items-center justify-center mb-16 relative">
-         <BlurImagePlaceholder seed={product.id} icon="image" />
-         <div className="absolute inset-0 bg-gradient-to-t from-bg-primary/20 to-transparent z-10"></div>
-      </div>
-
-      <div className="text-center">
-        <Link href="/checkout" className="bg-primary text-on-primary py-4 px-8 rounded-full font-label-md uppercase tracking-widest hover:bg-on-surface transition-colors">
-          Pre-Order
+  const stickyContent = [
+    {
+      title: "Der Ursprung",
+      description: "Alles beginnt mit der Idee, das Gebet nicht als Pflicht, sondern als tägliches Retreat zu verstehen. Dieses Stück wurde entworfen, um dich genau daran zu erinnern.",
+    },
+    {
+      title: "Das Material",
+      description: "Wir beziehen unsere Stoffe ausschließlich aus den historischen Basaren Istanbuls. Der schwere Samt und die feine Baumwolle fühlen sich nicht nur luxuriös an, sondern überdauern Generationen.",
+    },
+    {
+      title: "Die Handwerkskunst",
+      description: "Keine Massenproduktion. Jede Naht, jede Prägung und jeder Knoten wird in liebevoller Handarbeit von unseren Meistern in den Ateliers von İkitelli gefertigt.",
+    },
+    {
+      title: "Dein Unikat",
+      description: "Da jedes Stück von Hand gefertigt wird, entstehen winzige, einzigartige Variationen. Diese sind keine Fehler, sondern der Beweis authentischer Handwerkskunst.",
+      content: (
+        <Link href="/checkout" className="inline-block mt-4 bg-primary text-on-primary py-4 px-8 rounded-full font-label-md uppercase tracking-widest hover:bg-on-surface transition-colors">
+          Jetzt vorbestellen
         </Link>
-      </div>
+      )
+    }
+  ];
+
+  const stickyBackgrounds = [
+    <div key="bg1" className="w-full h-full bg-[#2A2425]"><BlurImagePlaceholder seed={`${product.id}-origin`} icon="auto_awesome" /></div>,
+    <div key="bg2" className="w-full h-full bg-[#3A3233]"><BlurImagePlaceholder seed={`${product.id}-fabric`} icon="texture" /></div>,
+    <div key="bg3" className="w-full h-full bg-[#1A1617]"><BlurImagePlaceholder seed={`${product.id}-craft`} icon="precision_manufacturing" /></div>,
+    <div key="bg4" className="w-full h-full bg-[#4A3F41]"><BlurImagePlaceholder seed={`${product.id}-final`} icon="diamond" /></div>,
+  ];
+
+  return (
+    <main className="flex-grow bg-bg-primary">
+      <SEOMetadata jsonLd={jsonLd} />
+      
+      {/* Cinematic Header */}
+      <section className="h-screen flex flex-col justify-center items-center text-center px-margin-mobile md:px-margin-desktop relative">
+        <ScrollReveal direction="down" delay={0.2}>
+           <span className="font-label-md text-primary uppercase tracking-widest mb-6 block">Kollektion</span>
+        </ScrollReveal>
+        <h1 className="font-display-lg text-6xl md:text-8xl lg:text-[10rem] text-on-surface mb-6 font-serif leading-[0.85]">
+          <TextMask delay={0.4}>{product.title}</TextMask>
+        </h1>
+        <ScrollReveal direction="up" delay={0.6}>
+          <p className="font-body-lg text-text-secondary max-w-2xl mx-auto mb-12 text-xl">
+            {product.subtitle}
+          </p>
+          <span className="bg-surface-variant text-text-secondary px-6 py-3 rounded-full font-label-md uppercase tracking-widest text-[12px] border border-outline-variant shadow-pink">
+            Release: {product.date}
+          </span>
+        </ScrollReveal>
+        
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-12 flex flex-col items-center gap-4 animate-bounce">
+          <span className="font-label-md text-text-secondary uppercase tracking-widest text-[10px]">Deep Dive</span>
+          <div className="w-[1px] h-12 bg-primary/50" />
+        </div>
+      </section>
+
+      {/* Deep Dive Sticky Scroll */}
+      <StickyScroll content={stickyContent} backgrounds={stickyBackgrounds} />
+
     </main>
   );
 }

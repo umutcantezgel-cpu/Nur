@@ -15,6 +15,8 @@ import { WaitlistCard } from "@/components/ui/waitlist-card";
 import { Accordion } from "@/components/ui/accordion";
 import { TestimonialSlider } from "@/components/ui/testimonial-slider";
 import { InstagramGrid } from "@/components/ui/instagram-grid";
+import { ScrollReveal, TextMask } from "@/components/ui/scroll-reveal";
+import { ParallaxSection } from "@/components/ui/parallax-section";
 import { SEOMetadata } from "@/components/seo-metadata";
 import { constructMetadata } from "@/lib/metadata";
 
@@ -48,221 +50,157 @@ export default function Home() {
     <main className="flex-grow pt-20">
       <SEOMetadata jsonLd={landingPageJsonLd} />
 
-      {/* Hero Section: Elegant Split-Screen */}
-      <section className="min-h-[85vh] flex flex-col lg:flex-row relative bg-bg-primary overflow-hidden">
-        {/* Text Content */}
-        <div className="flex-1 flex flex-col justify-center px-margin-mobile md:px-margin-desktop py-16 md:py-24 z-10">
-          <div className="max-w-xl mx-auto lg:mx-0">
-            <motion.span 
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="font-label-md text-label-md text-primary uppercase tracking-widest mb-6 block"
-            >
+      {/* Hero Section: Cinematic 2.5D */}
+      <section className="min-h-[100vh] flex flex-col relative bg-bg-primary overflow-hidden">
+        <ParallaxSection speed={0.3} className="absolute inset-0">
+          {/* Abstract light layers */}
+          <div className="absolute top-1/4 left-1/4 w-[800px] h-[800px] bg-primary/20 blur-[120px] rounded-full mix-blend-screen" />
+          <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-[#E8DCC4]/10 blur-[100px] rounded-full mix-blend-screen" />
+        </ParallaxSection>
+
+        <div className="flex-1 flex flex-col items-center justify-center px-margin-mobile md:px-margin-desktop relative z-10 text-center">
+          <ScrollReveal delay={0.2} direction="up" distance={30}>
+            <span className="font-label-md text-label-md text-primary uppercase tracking-widest mb-6 block">
               Exklusiver Vorabzugang
-            </motion.span>
-            
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              className="font-display-lg text-4xl md:text-5xl lg:text-6xl text-on-surface mb-8 leading-tight font-serif"
-            >
-              Licht für deine Seele. <br />
-              <span className="text-primary italic">Demnächst verfügbar.</span>
-            </motion.h1>
-            
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="font-body-lg text-body-lg text-text-secondary mb-12 max-w-lg leading-relaxed"
-            >
+            </span>
+          </ScrollReveal>
+          
+          <h1 className="font-display-lg text-6xl md:text-8xl lg:text-9xl text-on-surface mb-8 leading-[0.9] font-serif max-w-5xl mx-auto">
+            <TextMask delay={0.4}>Licht für</TextMask>
+            <TextMask delay={0.6} className="text-primary italic mt-2">deine Seele.</TextMask>
+          </h1>
+          
+          <ScrollReveal delay={0.8} direction="up">
+            <p className="font-body-lg text-text-secondary mb-12 max-w-xl mx-auto leading-relaxed text-xl">
               Trag dich in die VIP-Warteliste ein und erhalte exklusiven Zugang zu unserem ersten Drop – direkt aus den Manufakturen Istanbuls.
-            </motion.p>
-            
+            </p>
+          </ScrollReveal>
+          
+          <ScrollReveal delay={1.0} direction="up">
             <WaitlistCard />
-          </div>
+          </ScrollReveal>
         </div>
 
-        {/* Hero Image */}
-        <div className="flex-1 relative min-h-[500px] lg:min-h-full">
-           <motion.div 
-             initial={{ opacity: 0 }}
-             animate={{ opacity: 1 }}
-             transition={{ duration: 1.5 }}
-             className="absolute inset-0 bg-surface-variant flex items-center justify-center p-8 text-center"
-           >
-             <div className="w-[80%] h-[80%] border border-[#E8DCC4] border-opacity-30 flex flex-col items-center justify-center gap-4 rounded-[32px] bg-[#4A3F41] bg-opacity-20 shadow-pink">
-                <span className="material-symbols-outlined text-4xl text-[#E8DCC4] opacity-50">photo_library</span>
-                <span className="font-label-md text-label-md text-[#E8DCC4] uppercase tracking-widest opacity-70">Aesthetic Heritage Image Placeholder</span>
-             </div>
-           </motion.div>
-           <div className="absolute inset-0 bg-gradient-to-r from-bg-primary via-transparent to-transparent lg:w-[150px] z-10" />
-           <div className="absolute inset-0 bg-gradient-to-t from-bg-primary via-transparent to-transparent lg:hidden h-[150px] bottom-0 top-auto z-10" />
+        {/* Scroll Indicator */}
+        <motion.div 
+          className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+        >
+          <span className="font-label-md text-text-secondary uppercase tracking-widest text-sm">Entdecken</span>
+          <div className="w-[1px] h-12 bg-gradient-to-b from-text-secondary to-transparent" />
+        </motion.div>
+      </section>
+
+      {/* Cinematic Deep Dive: The Craft */}
+      <section className="relative bg-surface text-on-surface py-32 md:py-48 overflow-hidden">
+        <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-24 items-center">
+            <div>
+              <ScrollReveal direction="left">
+                <span className="font-label-md text-primary uppercase tracking-widest mb-6 block">Die Manufaktur</span>
+                <h2 className="font-headline-lg text-5xl md:text-6xl lg:text-7xl font-serif leading-tight mb-8">
+                  Meisterhafte<br/>Tradition aus<br/><span className="italic text-primary">Istanbul</span>.
+                </h2>
+                <p className="font-body-lg text-text-secondary text-lg leading-relaxed mb-8">
+                  Jedes Stück wird in kleinen, spezialisierten Ateliers handgefertigt. Von der Auswahl der feinsten Samtstoffe auf dem historischen Mahmutpaşa-Markt bis hin zur präzisen Heißfolienprägung in İkitelli.
+                </p>
+                <div className="w-16 h-[1px] bg-primary mb-8" />
+                <p className="font-body-md text-text-secondary italic">
+                  "Wir kreieren nicht nur Objekte, wir weben Spiritualität in den Alltag."
+                </p>
+              </ScrollReveal>
+            </div>
+            
+            <div className="relative aspect-[3/4] w-full rounded-[40px] overflow-hidden">
+              <ParallaxSection speed={1.2} className="w-full h-full absolute inset-0">
+                <div className="w-full h-full bg-surface-variant flex items-center justify-center bg-gradient-to-tr from-[#E8DCC4]/20 to-transparent">
+                  <span className="material-symbols-outlined text-6xl text-primary/50">architecture</span>
+                </div>
+              </ParallaxSection>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Teaser / Mission Section (Zig-Zag) */}
-      <motion.section 
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="py-24 md:py-32 bg-bg-primary max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop"
-      >
-        <div className="flex flex-col md:flex-row items-center gap-12 lg:gap-24">
-           {/* Image block */}
-           <motion.div 
-             initial={{ opacity: 0, x: -40 }}
-             whileInView={{ opacity: 1, x: 0 }}
-             viewport={{ once: true, margin: "-100px" }}
-             transition={{ duration: 0.8 }}
-             className="w-full md:w-1/2 aspect-[4/5] rounded-[24px] overflow-hidden relative shadow-pink bg-surface-variant flex items-center justify-center border border-outline-variant"
-           >
-              <div className="text-center px-4">
-                 <span className="material-symbols-outlined text-3xl text-primary opacity-50 mb-2 block">image</span>
-                 <span className="font-label-md text-text-secondary uppercase tracking-widest opacity-80">Mission Image Placeholder</span>
-              </div>
-           </motion.div>
-
-           {/* Text Block */}
-           <div className="w-full md:w-1/2 flex flex-col justify-center">
-             <motion.span 
-               initial={{ opacity: 0, y: 20 }}
-               whileInView={{ opacity: 1, y: 0 }}
-               viewport={{ once: true }}
-               transition={{ duration: 0.6 }}
-               className="font-label-md text-primary uppercase tracking-widest mb-6 block"
-             >
-               Unsere Vision
-             </motion.span>
-             <motion.h2 
-               initial={{ opacity: 0, y: 20 }}
-               whileInView={{ opacity: 1, y: 0 }}
-               viewport={{ once: true }}
-               transition={{ duration: 0.6, delay: 0.1 }}
-               className="font-headline-lg text-3xl md:text-4xl text-on-surface mb-8 font-serif leading-tight"
-             >
-               Accessible Luxury für den <br />Islamic Lifestyle
-             </motion.h2>
-             <motion.p 
-               initial={{ opacity: 0, y: 20 }}
-               whileInView={{ opacity: 1, y: 0 }}
-               viewport={{ once: true }}
-               transition={{ duration: 0.6, delay: 0.2 }}
-               className="font-body-lg text-text-secondary leading-relaxed mb-6"
-             >
-               Wir glauben, dass spirituelle Alltagsobjekte nicht nur funktional, sondern auch von zeitloser Ästhetik sein sollten. Nur verbindet tiefe spirituelle Tradition mit modernem Minimalismus.
-             </motion.p>
-             <motion.p 
-               initial={{ opacity: 0, y: 20 }}
-               whileInView={{ opacity: 1, y: 0 }}
-               viewport={{ once: true }}
-               transition={{ duration: 0.6, delay: 0.3 }}
-               className="font-body-lg text-text-secondary leading-relaxed"
-             >
-               Jede unserer handgefertigten Koranhüllen und Premium-Gebetsteppiche wird mit größter Sorgfalt entworfen, um Ruhe und Eleganz in dein Zuhause zu bringen.
-             </motion.p>
-           </div>
-        </div>
-      </motion.section>
-
-      {/* FAQ Section */}
-      <motion.section 
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="py-24 md:py-32 bg-surface"
-      >
-        <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
-           <div className="text-center mb-16">
-              <span className="font-label-md text-primary uppercase tracking-widest mb-4 block">Help Desk</span>
-              <h2 className="font-headline-lg text-4xl text-on-surface font-serif">Häufig Gestellte Fragen</h2>
-           </div>
-           <Accordion items={MOCK_FAQS} />
-        </div>
-      </motion.section>
-
       {/* The "Sneak Peek" Interactive Grid */}
-      <motion.section 
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="py-24 md:py-32 bg-surface border-y border-surface-variant"
-      >
+      <section className="py-32 md:py-48 bg-bg-primary relative border-t border-surface-variant">
         <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
-          <div className="text-center mb-16 md:mb-24">
-            <span className="font-label-md text-primary uppercase tracking-widest mb-4 block">Sneak Peek</span>
-            <h2 className="font-headline-lg text-4xl text-on-surface font-serif">Kommende Kollektionen</h2>
+          <div className="text-center mb-24">
+            <ScrollReveal direction="up">
+              <span className="font-label-md text-primary uppercase tracking-widest mb-4 block">Sneak Peek</span>
+              <h2 className="font-headline-lg text-5xl md:text-7xl text-on-surface font-serif">Kommende Kollektionen</h2>
+            </ScrollReveal>
           </div>
 
           <Suspense fallback={<ClientSkeletonWrapper count={3} className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12" />}>
-            <SneakPeekGrid />
+            <ScrollReveal direction="up" delay={0.2}>
+              <SneakPeekGrid />
+            </ScrollReveal>
           </Suspense>
         </div>
-      </motion.section>
+      </section>
 
       {/* Testimonial Slider */}
-      <motion.section 
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="py-24 md:py-32 bg-bg-primary"
-      >
+      <section className="py-32 bg-surface">
          <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
-            <div className="text-center mb-0 md:mb-8">
-               <span className="font-label-md text-primary uppercase tracking-widest mb-4 block">Community</span>
-               <h2 className="font-headline-lg text-4xl text-on-surface font-serif">Stimmen der ersten Stunde</h2>
-            </div>
-            <TestimonialSlider testimonials={MOCK_TESTIMONIALS} />
+            <ScrollReveal direction="up">
+              <div className="text-center mb-16">
+                 <span className="font-label-md text-primary uppercase tracking-widest mb-4 block">Community</span>
+                 <h2 className="font-headline-lg text-5xl text-on-surface font-serif">Stimmen der ersten Stunde</h2>
+              </div>
+              <TestimonialSlider testimonials={MOCK_TESTIMONIALS} />
+            </ScrollReveal>
          </div>
-      </motion.section>
+      </section>
 
       {/* Journal / SEO Hub */}
-      <motion.section 
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="py-24 md:py-32 bg-bg-primary max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop"
-      >
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-          <div>
-             <span className="font-label-md text-primary uppercase tracking-widest mb-4 block">Editorial</span>
-             <h2 className="font-headline-lg text-4xl text-on-surface font-serif">Das Nur Journal</h2>
+      <section className="py-32 md:py-48 bg-bg-primary max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+        <ScrollReveal direction="up">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+            <div>
+               <span className="font-label-md text-primary uppercase tracking-widest mb-4 block">Editorial</span>
+               <h2 className="font-headline-lg text-5xl text-on-surface font-serif">Das Nur Journal</h2>
+            </div>
+            <Link href="/journal" className="font-label-md text-primary hover:text-on-surface uppercase tracking-widest transition-colors flex items-center gap-2 border-b border-primary pb-1">
+              Alle Artikel 
+              <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+            </Link>
           </div>
-          <Link href="/journal" className="font-label-md text-primary hover:text-on-surface uppercase tracking-widest transition-colors flex items-center gap-2 border-b border-primary pb-1">
-            Alle Artikel 
-            <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
-          </Link>
-        </div>
+        </ScrollReveal>
 
          <Suspense fallback={<ClientSkeletonWrapper count={2} className="grid grid-cols-1 md:grid-cols-2 gap-12" />}>
-           <JournalGrid />
+           <ScrollReveal direction="up" delay={0.2}>
+             <JournalGrid />
+           </ScrollReveal>
          </Suspense>
-      </motion.section>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-32 bg-surface border-t border-surface-variant">
+        <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop max-w-4xl">
+           <ScrollReveal direction="up">
+             <div className="text-center mb-16">
+                <span className="font-label-md text-primary uppercase tracking-widest mb-4 block">Help Desk</span>
+                <h2 className="font-headline-lg text-5xl text-on-surface font-serif">Häufig Gestellte Fragen</h2>
+             </div>
+             <Accordion items={MOCK_FAQS} />
+           </ScrollReveal>
+        </div>
+      </section>
 
       {/* Instagram Grid */}
-      <motion.section 
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="py-24 md:py-32 bg-surface border-t border-surface-variant"
-      >
+      <section className="py-32 bg-bg-primary">
         <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
-           <div className="text-center mb-16">
-              <span className="font-label-md text-primary uppercase tracking-widest mb-4 block">@ay_nur</span>
-              <h2 className="font-headline-lg text-4xl text-on-surface font-serif">Aesthetic Details</h2>
-           </div>
-           <InstagramGrid posts={MOCK_INSTAGRAM} />
+           <ScrollReveal direction="up">
+             <div className="text-center mb-16">
+                <span className="font-label-md text-primary uppercase tracking-widest mb-4 block">@ay_nur</span>
+                <h2 className="font-headline-lg text-5xl text-on-surface font-serif">Aesthetic Details</h2>
+             </div>
+             <InstagramGrid posts={MOCK_INSTAGRAM} />
+           </ScrollReveal>
         </div>
-      </motion.section>
-
+      </section>
     </main>
   );
 }

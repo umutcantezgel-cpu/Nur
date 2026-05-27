@@ -1,68 +1,96 @@
 "use client";
 
-import React from 'react';
+import React, { useRef } from 'react';
 import * as motion from 'motion/react-client';
 import Link from 'next/link';
+import { BlurImagePlaceholder } from '@/components/ui/blur-image';
+import { ScrollReveal, TextMask } from '@/components/ui/scroll-reveal';
+
+const DRAG_ITEMS = [
+  { id: 1, title: "Ramadan Nights", top: "10%", left: "20%", width: "400px", height: "500px", zIndex: 10, product: "Midnight Satin" },
+  { id: 2, title: "Ihsan", top: "30%", left: "50%", width: "500px", height: "350px", zIndex: 12, product: "Creme Tasbih" },
+  { id: 3, title: "The Atelier", top: "60%", left: "15%", width: "450px", height: "600px", zIndex: 8, product: "Premium Kartonage" },
+  { id: 4, title: "Sabr", top: "15%", left: "75%", width: "350px", height: "450px", zIndex: 15, product: "Samt Hülle" },
+  { id: 5, title: "Heritage", top: "50%", left: "80%", width: "600px", height: "400px", zIndex: 5, product: "Gebetsteppich" },
+  { id: 6, title: "Light", top: "80%", left: "55%", width: "400px", height: "400px", zIndex: 20, product: "Signature Box" },
+];
 
 export default function LookbookPage() {
-  const looks = [
-    { id: 1, title: "Die Ramadan Kollektion", description: "Sanfte Farben und feine Stoffe für den besonderen Monat.", hotspotX: "30%", hotspotY: "50%", product: "Satin Koranhülle" },
-    { id: 2, title: "Istanbul Nights", description: "Tiefe Blautöne inspiriert von den Nächten am Bosporus.", hotspotX: "65%", hotspotY: "40%", product: "Midnight Gebetsteppich" },
-    { id: 3, title: "Elegance in Creme", description: "Minimalistisches Design, maximale Wirkung.", hotspotX: "50%", hotspotY: "70%", product: "Creme Tasbih" }
-  ];
+  const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <main className="flex-grow pt-[140px] bg-bg-primary">
-      <div className="text-center mb-16 px-margin-mobile">
-        <h1 className="font-display-lg text-4xl lg:text-6xl text-on-surface mb-6 font-serif">Lookbook</h1>
-        <p className="font-body-md text-text-secondary max-w-2xl mx-auto">
-          Inspirationen für dein Zuhause. Entdecke, wie du unsere handgefertigten Stücke harmonisch in dein Interior integrierst.
-        </p>
+    <main className="flex-grow bg-bg-primary overflow-hidden flex flex-col h-screen">
+      
+      {/* Header Overlay (fixed) */}
+      <div className="absolute top-0 left-0 w-full p-8 pt-[140px] z-50 pointer-events-none flex flex-col md:flex-row justify-between items-start md:items-center px-margin-mobile md:px-margin-desktop">
+        <div>
+          <h1 className="font-display-lg text-5xl md:text-7xl text-on-surface font-serif leading-none drop-shadow-lg">
+            The Archive
+          </h1>
+          <p className="font-body-md text-text-secondary max-w-sm mt-4 backdrop-blur-sm bg-bg-primary/30 p-2 rounded-lg">
+            Eine interaktive Galerie unserer Ästhetik. Ziehe (drag) die Bilder, um die Leinwand zu erkunden. Klicke auf die Hotspots für Produktdetails.
+          </p>
+        </div>
+        
+        <div className="hidden md:flex items-center gap-4 animate-pulse">
+           <span className="material-symbols-outlined text-primary text-3xl">swipe</span>
+           <span className="font-label-md uppercase tracking-widest text-primary text-xs">Drag to Explore</span>
+        </div>
       </div>
 
-      <div className="max-w-[1600px] mx-auto pb-section-padding px-4 md:px-8 flex flex-col gap-8 md:gap-32">
-        {looks.map((look, idx) => (
-          <motion.div 
-            key={look.id}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
-            className={`flex flex-col ${idx % 2 === 1 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-8 md:gap-16`}
-          >
-            <div className="w-full md:w-2/3 aspect-[4/3] md:aspect-[16/10] bg-surface-variant/50 rounded-[32px] overflow-hidden relative group">
-              <div className="absolute inset-0 flex items-center justify-center opacity-30 text-text-secondary/50">
-                 <span className="material-symbols-outlined text-[64px]">image</span>
-              </div>
-              
-              {/* Hotspot */}
-              <motion.div 
-                className="absolute w-8 h-8 rounded-full bg-surface/80 backdrop-blur-md flex items-center justify-center cursor-pointer shadow-lg hover:scale-110 transition-transform group/hotspot z-20"
-                style={{ left: look.hotspotX, top: look.hotspotY }}
-                whileHover={{ scale: 1.1 }}
-              >
-                <div className="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+      {/* Drag Canvas */}
+      <div className="relative flex-grow w-full h-full overflow-hidden cursor-grab active:cursor-grabbing bg-surface-variant">
+        {/* Subtle grid background */}
+        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#E8DCC4 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+
+        <motion.div 
+          ref={containerRef}
+          drag
+          dragConstraints={{ top: -1000, left: -1500, right: 1000, bottom: 1000 }}
+          dragElastic={0.2}
+          className="absolute top-1/2 left-1/2 w-[3000px] h-[2000px] -translate-x-1/2 -translate-y-1/2"
+        >
+          {DRAG_ITEMS.map((item, idx) => (
+            <motion.div
+              key={item.id}
+              className="absolute group"
+              style={{
+                top: item.top,
+                left: item.left,
+                width: item.width,
+                height: item.height,
+                zIndex: item.zIndex,
+              }}
+              whileHover={{ scale: 1.02, zIndex: 50 }}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.1, duration: 0.8 }}
+            >
+              <div className="w-full h-full rounded-[32px] overflow-hidden shadow-2xl relative">
+                <BlurImagePlaceholder seed={`lookbook-${item.id}`} icon="image" />
                 
-                {/* Tooltip */}
-                <div className="absolute opacity-0 group-hover/hotspot:opacity-100 pointer-events-none transition-opacity bottom-full mb-3 left-1/2 -translate-x-1/2 bg-surface text-on-surface whitespace-nowrap px-4 py-2 rounded-xl font-label-md uppercase tracking-widest text-[10px] shadow-lg border border-outline-variant">
-                  {look.product}
+                {/* Hotspot */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                  <motion.div 
+                    className="w-12 h-12 rounded-full bg-surface/80 backdrop-blur-md flex items-center justify-center cursor-pointer shadow-lg hover:scale-110 transition-transform group/hotspot"
+                    whileHover={{ scale: 1.1 }}
+                  >
+                    <div className="w-3 h-3 rounded-full bg-primary animate-pulse"></div>
+                    
+                    {/* Tooltip */}
+                    <div className="absolute opacity-0 group-hover/hotspot:opacity-100 pointer-events-none transition-opacity top-full mt-4 left-1/2 -translate-x-1/2 bg-surface text-on-surface whitespace-nowrap px-6 py-3 rounded-xl shadow-2xl border border-outline-variant flex flex-col items-center gap-2">
+                      <span className="font-serif text-lg">{item.title}</span>
+                      <span className="font-label-md uppercase tracking-widest text-primary text-[10px]">{item.product}</span>
+                      <Link href="/kollektionen" className="mt-2 text-[10px] underline uppercase tracking-widest text-text-secondary hover:text-primary pointer-events-auto">Shop Now</Link>
+                    </div>
+                  </motion.div>
                 </div>
-              </motion.div>
-            </div>
-            
-            <div className={`w-full md:w-1/3 flex flex-col justify-center ${idx % 2 === 1 ? 'md:items-end md:text-right' : 'md:items-start md:text-left'} text-center md:px-0 px-8`}>
-              <span className="font-label-md text-primary uppercase tracking-widest mb-4">Edition 0{look.id}</span>
-              <h2 className="font-headline-lg text-3xl md:text-4xl text-on-surface mb-4 font-serif">{look.title}</h2>
-              <p className="font-body-md text-text-secondary leading-relaxed mb-8">
-                {look.description}
-              </p>
-              <Link href="/kollektionen" className="border-b-2 border-primary text-primary pb-1 font-label-md uppercase tracking-widest hover:text-on-surface hover:border-on-surface transition-colors inline-block w-fit">
-                Kollektion entdecken
-              </Link>
-            </div>
-          </motion.div>
-        ))}
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
+
     </main>
   );
 }

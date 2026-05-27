@@ -6,6 +6,7 @@ import { Footer } from '@/components/layout/footer';
 import { ToastProvider } from '@/contexts/toast-context';
 import { ToastContainer } from '@/components/ui/toast-container';
 import { GlobalLoader } from '@/components/ui/global-loader';
+import { CursorGlow } from '@/components/ui/cursor-glow';
 import { WishlistProvider } from '@/contexts/wishlist-context';
 import { constructMetadata } from '@/lib/metadata';
 
@@ -43,6 +44,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
       <body className="antialiased font-sans text-on-surface bg-bg-primary overflow-x-hidden min-h-screen flex flex-col" suppressHydrationWarning>
+        <CursorGlow />
         <GlobalLoader />
         <ToastProvider>
           <WishlistProvider>

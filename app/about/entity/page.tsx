@@ -1,10 +1,13 @@
 import { Metadata } from "next";
+import { SEOMetadata } from "@/components/seo-metadata";
 import { constructMetadata } from "@/lib/metadata";
+import { ScrollReveal, TextMask } from "@/components/ui/scroll-reveal";
+import { ParallaxSection } from "@/components/ui/parallax-section";
+import { InteractiveMap } from "@/components/ui/interactive-map";
 
 export const metadata: Metadata = constructMetadata({
-  title: "Über Nur | Fakten & Philosophie",
-  description: "Erfahre mehr über Nur. Wer steht hinter Nur, wie produzieren wir in Istanbul und was bedeutet zugänglicher Luxus (Accessible Luxury)?",
-  keywords: ["Nur", "Über uns", "Manufaktur Istanbul", "Accessible Luxury", "Islamic Lifestyle"],
+  title: "Entity | The Architecture of Nur",
+  description: "Erfahre mehr über die Struktur, Handwerkskunst und Philosophie hinter Nur. Entdecke unsere Wurzeln in Istanbul.",
 });
 
 export default function EntityPage() {
@@ -27,22 +30,6 @@ export default function EntityPage() {
           "@type": "Answer",
           "text": "Alle unsere Produkte werden in einer exklusiven Traditionsmanufaktur in Istanbul, Türkei, unter fairen Bedingungen in Handarbeit gefertigt."
         }
-      },
-      {
-        "@type": "Question",
-        "name": "Warum liegen die Preise bei Nur zwischen 30 und 45 Euro?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Wir stehen für 'Accessible Luxury'. Wir bieten feinste Materialien, präzise Handarbeit aus Istanbul und eine luxuriöse Auspack-Erfahrung zu einem Preis, der für jeden zugänglich bleibt."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Wie funktioniert die Lieferung bei Nur?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Da wir viele Stücke in limitierten Drops oder über Pre-Order verkaufen, kann die Fertigung und Prüfung deines Unikats mitunter 3 bis 6 Wochen dauern. Die Lieferung erfolgt aus Deutschland klimaneutral per DHL GoGreen."
-        }
       }
     ]
   };
@@ -58,51 +45,81 @@ export default function EntityPage() {
   };
 
   return (
-    <main className="pt-[140px] pb-section-padding px-margin-mobile md:px-margin-desktop max-w-3xl mx-auto flex-grow min-h-[70vh]">
+    <main className="flex-grow pt-20 bg-bg-primary overflow-hidden">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
 
-      <h1 className="font-display-lg text-4xl lg:text-5xl text-on-surface mb-12 font-serif text-center">Entity & Brand Fact Sheet</h1>
-
-      <div className="bg-surface-variant p-8 md:p-12 rounded-[32px] border border-outline-variant shadow-pink flex flex-col gap-12">
+      {/* Cinematic Hero */}
+      <section className="min-h-[90vh] flex flex-col justify-center px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto relative">
+        <ScrollReveal delay={0.2} direction="down">
+          <span className="font-label-md text-primary uppercase tracking-widest mb-6 block">The Entity</span>
+        </ScrollReveal>
         
-        <section>
-          <h2 className="font-headline-md text-2xl text-primary font-serif mb-4">Wer steht hinter Nur?</h2>
-          <p className="font-body-md text-text-secondary leading-relaxed">
-            Nur ist mehr als ein klassischer Onlineshop. Wir sind eine Premium-Marke für Islamic Lifestyle und Handcrafted Decor. Unsere Philosophie basiert darauf, tiefgründige Spiritualität in moderne, reduzierte und hochästhetische Designs zu übersetzen. Wir kreieren Objekte, die beruhigen, fokussieren und einen Hauch von zeitloser Eleganz in dein Zuhause bringen.
+        <h1 className="font-display-lg text-6xl md:text-8xl lg:text-9xl text-on-surface mb-12 font-serif max-w-5xl leading-[0.9]">
+          <TextMask delay={0.3}>Von den Basaren</TextMask>
+          <TextMask delay={0.5} className="text-text-secondary">Istanbuls bis zu</TextMask>
+          <TextMask delay={0.7} className="italic text-primary">dir nach Hause.</TextMask>
+        </h1>
+        
+        <ScrollReveal delay={1.0}>
+          <div className="w-24 h-[1px] bg-primary mb-12" />
+          <p className="font-body-lg text-text-secondary text-xl max-w-2xl leading-relaxed">
+            Nur ist mehr als eine Marke. Es ist ein Netzwerk aus jahrhundertealter Handwerkstradition, familiären Ateliers und einer modernen Vision von islamischem Minimalismus.
           </p>
-        </section>
+        </ScrollReveal>
+      </section>
 
-        <section>
-          <h2 className="font-headline-md text-2xl text-primary font-serif mb-4">Produktion in Istanbul</h2>
-          <p className="font-body-md text-text-secondary leading-relaxed mb-4">
-            Der Kern unserer Qualität liegt in der Türkei. Alle unsere Kollektionen werden in einer traditionsreichen Manufaktur im Herzen Istanbuls handgefertigt. Dort verschmelzen jahrhundertealtes Handwerkswissen und feine Textilverarbeitung mit unseren zeitgemäßen, minimalistischen Entwürfen. 
-          </p>
-          <p className="font-body-md text-text-secondary leading-relaxed">
-            Dieser direkte Draht in die Manufaktur ermöglicht es uns, jedes Detail – von der Garnauswahl bis zum letzten Nadelstich – rigoros zu kontrollieren und faire, transparente Bedingungen zu garantieren.
-          </p>
-        </section>
+      {/* Interactive Map Section */}
+      <section className="py-32 bg-surface border-y border-surface-variant relative overflow-hidden">
+        {/* Parallax Background */}
+        <ParallaxSection speed={0.8} className="absolute inset-0 opacity-30 pointer-events-none">
+          <div className="absolute inset-0 bg-[#E8DCC4] mix-blend-overlay" />
+        </ParallaxSection>
 
-        <section>
-          <h2 className="font-headline-md text-2xl text-primary font-serif mb-4">Accessible Luxury (30-45 €)</h2>
-          <p className="font-body-md text-text-secondary leading-relaxed">
-            Eine Luxus-Erfahrung muss kein Vermögen kosten. Unter dem Leitgedanken &quot;Accessible Luxury&quot; positionieren wir unsere Produkte ganz bewusst im Segment zwischen 30 und 45 Euro. Dafür erhältst du nicht nur erstklassige Istanbuler Handarbeit und edle Materialien (wie Samt oder schwere Baumwolle), sondern auch ein Auspack-Erlebnis, das den Standards internationaler Premium-Label entspricht (Signature Kartonage, Schleifenband, Seidenpapier).
-          </p>
-        </section>
+        <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop relative z-10">
+          <ScrollReveal direction="up" className="text-center mb-16">
+            <span className="font-label-md text-primary uppercase tracking-widest mb-4 block">Die Routen</span>
+            <h2 className="font-headline-lg text-5xl md:text-6xl text-on-surface font-serif">Unsere Manufakturen</h2>
+            <p className="font-body-md text-text-secondary mt-6 max-w-xl mx-auto">
+              Interagiere mit der Karte, um die geheimen Orte zu entdecken, an denen die Magie von Nur entsteht.
+            </p>
+          </ScrollReveal>
+          
+          <ScrollReveal direction="up" delay={0.2}>
+            <InteractiveMap />
+          </ScrollReveal>
+        </div>
+      </section>
 
-        <section>
-          <h2 className="font-headline-md text-2xl text-primary font-serif mb-4">Lieferung & Pre-Order</h2>
-          <p className="font-body-md text-text-secondary leading-relaxed mb-4">
-            Um unseren hohen Qualitätsstandard bei jedem Stück zu wahren und Überproduktion zu vermeiden, arbeiten wir primär mit limitierten Drops und Pre-Order-Phasen.
-          </p>
-          <ul className="list-disc list-inside font-body-md text-text-secondary leading-relaxed ml-2 space-y-2">
-            <li><strong>Der Prozess:</strong> Du sicherst dir dein Unikat. Daraufhin beginnt in Istanbul die Anfertigung.</li>
-            <li><strong>Die Dauer:</strong> Handwerk braucht Zeit. Bitte rechne mit 3 bis 6 Wochen, bis dein Artikel unsere strenge Qualitätskontrolle durchlaufen hat und bei dir ist.</li>
-            <li><strong>Der Versand:</strong> Verschickt wird aus unserem Logistikzentrum in Deutschland, schnell und klimaneutral mit DHL GoGreen.</li>
-          </ul>
-        </section>
+      {/* Values / Pillars */}
+      <section className="py-32 md:py-48 bg-bg-primary max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+        <ScrollReveal direction="up">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+            <div className="flex flex-col gap-6">
+              <span className="material-symbols-outlined text-4xl text-primary">spa</span>
+              <h3 className="font-serif text-3xl text-on-surface">Sabr & Ihsan</h3>
+              <p className="font-body-md text-text-secondary leading-relaxed">
+                Perfektion (Ihsan) braucht Geduld (Sabr). Wir drängen unsere Handwerker nicht. Jedes Stück darf so lange dauern, wie es braucht, um seinem spirituellen Zweck gerecht zu werden.
+              </p>
+            </div>
+            <div className="flex flex-col gap-6 mt-0 md:mt-16">
+              <span className="material-symbols-outlined text-4xl text-primary">diversity_3</span>
+              <h3 className="font-serif text-3xl text-on-surface">Familie</h3>
+              <p className="font-body-md text-text-secondary leading-relaxed">
+                Wir arbeiten ausschließlich mit familiär geführten Kleinbetrieben in der Türkei zusammen. Kein Massen-Sourcing, sondern Beziehungen auf Augenhöhe.
+              </p>
+            </div>
+            <div className="flex flex-col gap-6 mt-0 md:mt-32">
+              <span className="material-symbols-outlined text-4xl text-primary">eco</span>
+              <h3 className="font-serif text-3xl text-on-surface">Ewigkeit</h3>
+              <p className="font-body-md text-text-secondary leading-relaxed">
+                Gegen die Wegwerfgesellschaft. Unsere Produkte sind Erbstücke. Gemacht aus Materialien, die mit der Zeit durch die Berührung beim Gebet eine eigene Patina entwickeln.
+              </p>
+            </div>
+          </div>
+        </ScrollReveal>
+      </section>
 
-      </div>
     </main>
   );
 }
